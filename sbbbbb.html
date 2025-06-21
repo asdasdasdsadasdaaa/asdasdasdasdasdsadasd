@@ -1663,7 +1663,7 @@
             .modal .mod .totalplayed {
                 padding: 0 10px;
                 margin-bottom: -15px;
-                background: linear-gradient(160deg,hsla(353, 100%, 52%, 0.43), hsla(261, 100%, 52%, 0.43));
+                background: hsla(20 2.3% 45.3% / 0.54);
                 color: #000;
                 text-shadow: none;
                 font-size: .8em;
@@ -1922,14 +1922,14 @@
             }
 
             .frozenbg,.frozenbg:visited {
-                background: linear-gradient(160deg,hsla(353, 100%, 52%, 0.43), hsla(261, 100%, 52%, 0.43));
+                background: hsla(20 2.3% 45.3% / 0.54);
                 box-shadow: 0 0 6px hsla(200,100%,80%,1);
                 text-shadow: 0 0 7px hsla(200,100%,80%,1);
                 color: hsla(200,100%,90%,.8)
             }
 
             .hotbg,.hotbg:visited {
-                background: linear-gradient(160deg,hsla(353, 100%, 52%, 0.43), hsla(261, 100%, 52%, 0.43));
+                background: hsla(20 2.3% 45.3% / 0.54);
                 box-shadow: 0 0 6px hsla(20,80%,70%,1);
                 color: #FFF;
                 border: 0;
@@ -4620,8 +4620,8 @@
                     return extend(e, t),
                     e.prototype.II1Ol = function(t) {
                         var e, i;
-                        this.background = "hsl(" + this.hue + ",20%,20%)",
-                        this.color = "hsla(" + this.hue + ",50%,80%,1)",
+                        this.background = "hsl(360,20%,20%)",
+                         this.color = "hsla(181, 100%, 50%, 1)",
                         t.save(),
                         t.translate(this.px, this.l11OI),
                         t.clearRect(0, 0, this.O1Ill, this.lO0ll),
@@ -37517,6 +37517,9 @@ return this.background = "hsla(253,70%,30%,.15)",
                         case "pmf":
                             this.icon = "https://starblast.io/ecp/pmf.png";
                             break;
+                        case "sdc":
+                            this.icon = "https://i.ibb.co/5h9mNG9F/sdc.png";
+                            break;
                         case "seasonal":
                             this.icon = "https://starblast.io/ecp/seasonal.png"
                         }
@@ -37883,6 +37886,7 @@ return this.background = "hsla(253,70%,30%,.15)",
                             sdf: "Soloist Defence Force",
                             paw: "Paw",
                             gamepedia: "Gamepedia",
+                            sdc: "Sdc",
                             discord: "Discord",
                             medic: "Medic",
                             blank: "Blank",
@@ -54579,5 +54583,271 @@ return this.background = "hsla(253,70%,30%,.15)",
             }
             )();
         </script>
+        <script>
+// Starblast.io Music Player - Standalone Version
+document.addEventListener('DOMContentLoaded', function() {
+    'use strict';
+
+    // Configuration
+    const config = {
+        toggleHotkey: 'Alt+a',
+        closeHotkey: 'Alt+q',
+        defaultVolume: 50,
+        autoPlay: true
+    };
+
+    // Music playlist
+    const playlist = [
+        { title: "Track 1", url: "https://www.youtube.com/watch?v=rhZRNmTkctc" },
+        { title: "Track 2", url: "https://www.youtube.com/watch?v=mCFQ5m4hEYo" },
+        { title: "Track 3", url: "https://www.youtube.com/watch?v=myzCcICuHJ8" },
+        { title: "Track 4", url: "https://www.youtube.com/watch?v=kDfR4yI9TSY" },
+        { title: "Track 5", url: "https://www.youtube.com/watch?v=XMo6aye_6TA" },
+        { title: "Track 6", url: "https://www.youtube.com/watch?v=yIR76Q3InbY" }
+    ];
+
+    // Create player container
+    const container = document.createElement('div');
+    container.id = 'sb-music-player';
+    container.innerHTML = `
+        <div class="sb-player-header">
+            <div class="sb-player-title">Starblast Music Player</div>
+            <button class="sb-player-close" title="Close (${config.closeHotkey})">×</button>
+        </div>
+        <iframe class="sb-player-iframe" allow="autoplay" frameborder="0"></iframe>
+        <div class="sb-playlist"></div>
+        <div class="sb-controls">
+            <button class="sb-control-btn sb-prev-btn" title="Previous Track">⏮</button>
+            <button class="sb-control-btn sb-play-btn" title="Play/Pause">⏯</button>
+            <button class="sb-control-btn sb-next-btn" title="Next Track">⏭</button>
+        </div>
+        <input type="range" class="sb-volume-control" min="0" max="100" value="${config.defaultVolume}" title="Volume Control">
+    `;
+    document.body.appendChild(container);
+
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        #sb-music-player {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            background: hsla(20, 2.3%, 45.3%, 0.54);
+            border: 3px solid hsla(20, 2.3%, 74%, 0.84);
+            border-radius: 12px;
+            padding: 15px;
+            z-index: 9999;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            box-shadow: 0 0 15px hsla(20, 2.3%, 57.9%, 0.84), 0 0 30px hsla(20, 2.3%, 57.9%, 0.84);
+            backdrop-filter: blur(5px);
+            display: none;
+            transition: all 0.3s ease;
+        }
+        #sb-music-player:hover {
+            box-shadow: 0 0 20px hsla(20, 2.3%, 57.9%, 0.9), 0 0 40px hsla(20, 2.3%, 57.9%, 0.9);
+        }
+        .sb-player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid hsla(20, 2.3%, 74%, 0.5);
+        }
+        .sb-player-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255,255,255,0.3);
+        }
+        .sb-player-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+        .sb-player-close:hover {
+            background: hsla(20, 2.3%, 74%, 0.3);
+            transform: rotate(90deg);
+        }
+        .sb-player-iframe {
+            width: 100%;
+            height: 180px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid hsla(20, 2.3%, 74%, 0.3);
+        }
+        .sb-playlist {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        .sb-playlist-item {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: hsla(20, 2.3%, 30%, 0.3);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .sb-playlist-item:hover {
+            background-color: hsla(20, 2.3%, 30%, 0.5);
+            border-left: 3px solid hsla(20, 2.3%, 74%, 0.5);
+        }
+        .sb-playlist-item.active {
+            background-color: hsla(210, 100%, 50%, 0.3);
+            border-left: 3px solid hsl(210, 100%, 50%);
+            font-weight: bold;
+        }
+        .sb-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .sb-control-btn {
+            background: hsla(20, 2.3%, 30%, 0.5);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sb-control-btn:hover {
+            background: hsla(20, 2.3%, 30%, 0.8);
+            transform: scale(1.05);
+        }
+        .sb-volume-control {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: hsla(20, 2.3%, 30%, 0.5);
+            border-radius: 3px;
+            outline: none;
+            margin-top: 10px;
+        }
+        .sb-volume-control::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+        .sb-volume-control::-webkit-slider-thumb:hover {
+            background: hsl(210, 100%, 60%);
+            transform: scale(1.1);
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Player state
+    let currentTrackIndex = 0;
+    let isPlaying = false;
+    const playerEl = document.getElementById('sb-music-player');
+    const iframe = playerEl.querySelector('.sb-player-iframe');
+    const playlistContainer = playerEl.querySelector('.sb-playlist');
+    const playPauseBtn = playerEl.querySelector('.sb-play-btn');
+    const prevBtn = playerEl.querySelector('.sb-prev-btn');
+    const nextBtn = playerEl.querySelector('.sb-next-btn');
+    const closeBtn = playerEl.querySelector('.sb-player-close');
+    const volumeControl = playerEl.querySelector('.sb-volume-control');
+
+    // Initialize playlist
+    playlist.forEach((track, index) => {
+        const item = document.createElement('div');
+        item.className = 'sb-playlist-item';
+        item.textContent = track.title;
+        item.dataset.index = index;
+        playlistContainer.appendChild(item);
+    });
+
+    // Player functions
+    function loadTrack(index) {
+        if (index >= 0 && index < playlist.length) {
+            currentTrackIndex = index;
+            const track = playlist[index];
+            
+            // Update active track in playlist
+            document.querySelectorAll('.sb-playlist-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            playlistContainer.children[index].classList.add('active');
+            
+            // Load YouTube video
+            const videoId = extractYoutubeId(track.url);
+            if (videoId) {
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=${config.autoPlay ? 1 : 0}`;
+                isPlaying = config.autoPlay;
+                playPauseBtn.textContent = isPlaying ? '⏸' : '⏵';
+            }
+        }
+    }
+
+    function extractYoutubeId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    // Event listeners
+    playlistContainer.addEventListener('click', (e) => {
+        const item = e.target.closest('.sb-playlist-item');
+        if (item) {
+            loadTrack(parseInt(item.dataset.index));
+        }
+    });
+
+    prevBtn.addEventListener('click', () => {
+        loadTrack((currentTrackIndex - 1 + playlist.length) % playlist.length);
+    });
+
+    nextBtn.addEventListener('click', () => {
+        loadTrack((currentTrackIndex + 1) % playlist.length);
+    });
+
+    playPauseBtn.addEventListener('click', () => {
+        isPlaying = !isPlaying;
+        playPauseBtn.textContent = isPlaying ? '⏸' : '⏵';
+        // Note: Would need YouTube API for actual play/pause control
+    });
+
+    closeBtn.addEventListener('click', () => {
+        playerEl.style.display = 'none';
+    });
+
+    volumeControl.addEventListener('input', (e) => {
+        // Note: Would need YouTube API for actual volume control
+        console.log('Volume:', e.target.value);
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        if (e.altKey && e.key.toLowerCase() === 'a') {
+            playerEl.style.display = playerEl.style.display === 'none' ? 'block' : 'none';
+        }
+        if (e.altKey && e.key.toLowerCase() === 'q') {
+            playerEl.style.display = 'none';
+        }
+    });
+
+    // Initialize player
+    loadTrack(0);
+    playerEl.style.display = 'block';
+
+    console.log('Starblast Music Player initialized!');
+});
+</script>
     </body>
 </html>
