@@ -20341,6 +20341,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         case "gold":
                             this.buildGoldMaterial();
                             break;
+                          case "omega":
+                            this.buildOmegaMaterial();
+                            break;
                         case "titanium":
                             this.buildTitaniumMaterial();
                             break;
@@ -20440,6 +20443,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     ,
                     t.prototype.buildGoldMaterial = function() {
+                        return this.material = new THREE.MeshPhongMaterial({
+                            map: OOllO,
+                            bumpMap: OOllO,
+                            specularMap: OOllO,
+                            specular: 10506256,
+                            shininess: 50,
+                            bumpScale: .1,
+                            color: 8413232,
+                            emissive: l0l0l.hsvToRgbHex(this.hue, .5, 1),
+                            emissiveMap: OO10l
+                        })
+                    }
+                    ,
+                    t.prototype.buildOmegaMaterial = function() {
                         return this.material = new THREE.MeshPhongMaterial({
                             map: OOllO,
                             bumpMap: OOllO,
@@ -24355,6 +24372,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         case "gold":
                             this.buildGoldMaterial();
                             break;
+                         case "omega":
+                            this.buildOmegaMaterial();
+                            break;
                         case "titanium":
                             this.buildTitaniumMaterial();
                             break;
@@ -24446,6 +24466,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     ,
                     t.prototype.buildGoldMaterial = function() {
+                        return this.material = new THREE.MeshPhongMaterial({
+                            map: OOllO,
+                            bumpMap: OOllO,
+                            specularMap: OOllO,
+                            specular: 10506256,
+                            shininess: 50,
+                            bumpScale: .1,
+                            color: 8413232,
+                            emissive: l0l0l.hsvToRgbHex(this.hue, .5, 1),
+                            emissiveMap: OO10l
+                        })
+                    }
+                    ,
+                    t.prototype.buildOmegaMaterial = function() {
                         return this.material = new THREE.MeshPhongMaterial({
                             map: OOllO,
                             bumpMap: OOllO,
@@ -38284,6 +38318,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             break;
                         case "gold":
                             s = t.createLinearGradient(0, 0, 0, i),
+                            s.addColorStop(0, "hsl(40,100%,50%)"),
+                            s.addColorStop(.5, "hsl(40,100%,80%)"),
+                            s.addColorStop(.5, "hsl(20,100%,30%)"),
+                            s.addColorStop(1, "hsl(40,100%,50%)");
+                            break;
+                         case "omega":
+                            s = t.createLinearGradient(0, 0, 0, i),
                             s.addColorStop(0, "hsl(160 100% 44.9%)"),
                             s.addColorStop(.5, "hsl(160 100% 70.2%)"),
                             s.addColorStop(.5, "hsl(169 100% 30%)"),
@@ -38781,6 +38822,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             zinc: "Zinc",
                             alloy: "Alloy",
                             gold: "Gold",
+                            omega: "Omega",
                             titanium: "Titanium",
                             carbon: "Carbon"
                         },
