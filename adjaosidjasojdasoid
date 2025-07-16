@@ -38435,7 +38435,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             this.icon = "https://starblast.io/ecp/discord.png";
                             break;
                         case "twitch":
-                            this.icon = "https://starblast.io/ecp/twitch.png";
+                            this.icon = "https://i.ibb.co/DH9xB1SG/Copilot-20250716-194607.png";
                             break;
                         case "medic":
                             this.icon = "https://starblast.io/ecp/medic.jpg";
@@ -38817,7 +38817,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             unge: "United Nations Green Eagles",
                             halo: "Halo Corsairs",
                             youtube: "Youtube",
-                            twitch: "Twitch",
+                            twitch: "Omega",
                             invader: "Invader",
                             empire: "Galactic Empire",
                             alliance: "Rebel Alliance",
